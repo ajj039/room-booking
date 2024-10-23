@@ -4,9 +4,8 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserAuth } from "@/store/storeSlice";
+import { setUserAuth, setCurrenUser } from "@/store/storeSlice";
 import { useRouter } from "next/navigation";
-import { setCurrenUser } from "@/store/storeSlice";
 import logo from "@/app/assets/images/logo.svg";
 import checkAuth from "../actions/checkAuth";
 import destroySession from "../actions/destroySession";
@@ -14,12 +13,14 @@ import { FaUser, FaSignInAlt, FaSignOutAlt, FaBuilding } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const { isLoggedIn } = useSelector((store) => store.user);
+  const { isLoggedIn, currentUser } = useSelector((store) => store.user);
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const handleLogut = async () => {
+  console.log("cusss", currentUser);
+
+  const handleLogout = async () => {
     const { success, error } = await destroySession();
-
     if (success) {
       dispatch(setUserAuth(false));
       router.push("/login");
@@ -28,7 +29,6 @@ const Header = () => {
     }
   };
 
-  const dispatch = useDispatch();
   useEffect(() => {
     const checkAuthentication = async () => {
       const { isAuthenticated, user } = await checkAuth();
@@ -36,112 +36,102 @@ const Header = () => {
     };
     checkAuthentication();
   }, [dispatch]);
+
   return (
-    <header className="bg-gray-100">
+    <header className="bg-gradient-to-r from-teal-500 to-blue-800 shadow-lg">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link href="/">
-              <Image
-                className="h-12 w-12"
-                src={logo}
-                alt="Bookit"
-                priority={true}
-              />
+              <Image className="h-12 w-12" src={logo} alt="Bookit" priority />
             </Link>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {isLoggedIn && (
-                  <Link
-                    href="/"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-                  >
-                    Rooms
-                  </Link>
-                )}
-                {/* <!-- Logged In Only --> */}
+            <div className="hidden md:flex ml-10 space-x-6">
+              {isLoggedIn && (
                 <Link
-                  href="/bookings"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                  href="/"
+                  className="text-white hover:text-yellow-300 transition duration-300"
                 >
-                  Bookings
+                  Rooms
                 </Link>
-                {isLoggedIn && (
-                  <Link
-                    href="/rooms/add"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-                  >
-                    Add Room
-                  </Link>
-                )}
-              </div>
+              )}
+              <Link
+                href="/bookings"
+                className="text-white hover:text-yellow-300 transition duration-300"
+              >
+                Bookings
+              </Link>
+              {isLoggedIn && (
+                <Link
+                  href="/rooms/add"
+                  className="text-white hover:text-yellow-300 transition duration-300"
+                >
+                  Add Room
+                </Link>
+              )}
             </div>
           </div>
-          {/* <!-- Right Side Menu --> */}
-          <div className="ml-auto">
-            <div className="ml-4 flex items-center md:ml-6">
-              {/* <!-- Logged Out Only --> */}
-              {!isLoggedIn && (
-                <>
-                  <Link
-                    href="/login"
-                    className="mr-3 text-gray-800 hover:text-gray-600"
-                  >
-                    <FaSignInAlt className="mr-1 inline" /> Login
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="mr-3 text-gray-800 hover:text-gray-600"
-                  >
-                    <FaUser className="mr-1 inline" /> Register
-                  </Link>
-                </>
-              )}
-              {isLoggedIn && (
-                <>
-                  <Link href="/rooms/my">
-                    <FaBuilding className="mr-1 inline" /> My Rooms
-                  </Link>
-                  <button
-                    onClick={handleLogut}
-                    className="mx-3 text-gray-800 hover:text-gray-600"
-                  >
-                    <FaSignOutAlt className="mr-1 inline" /> Sign Out
-                  </button>
-                </>
-              )}
-            </div>
+          <div className="ml-auto flex items-center space-x-4">
+            {!isLoggedIn ? (
+              <>
+                <Link
+                  href="/login"
+                  className="text-white hover:text-yellow-300 transition duration-300"
+                >
+                  <FaSignInAlt className="inline" /> Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="text-white hover:text-yellow-300 transition duration-300"
+                >
+                  <FaUser className="inline" /> Register
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/rooms/my"
+                  className="text-white hover:text-yellow-300 transition duration-300"
+                >
+                  <FaBuilding className="inline" /> My Rooms
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="text-white hover:text-yellow-300 transition duration-300"
+                >
+                  <FaSignOutAlt className="inline" /> Sign Out
+                </button>
+                <p className="text-white">{currentUser?.email}</p>
+              </>
+            )}
           </div>
         </div>
       </nav>
 
-      {/* <!-- Mobile m/enu --> */}
+      {/* Mobile Menu */}
       <div className="md:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+        <div className="space-y-1 px-2 pb-3 pt-2">
           {isLoggedIn && (
             <Link
               href="/"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-700 transition duration-300"
             >
               Rooms
             </Link>
           )}
-          {/* <!-- Logged In Only --> */}
           <Link
             href="/bookings"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+            className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-700 transition duration-300"
           >
             Bookings
           </Link>
           {isLoggedIn && (
-            <>
-              <Link
-                href="/rooms/add"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-              >
-                Add Room
-              </Link>
-            </>
+            <Link
+              href="/rooms/add"
+              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-purple-700 transition duration-300"
+            >
+              Add Room
+            </Link>
           )}
         </div>
       </div>

@@ -29,9 +29,9 @@ const BookedRoomCard = ({ booking }) => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-4 mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-      <div>
-        <h4 className="text-lg font-semibold">{room.name}</h4>
+    <div className="bg-white shadow-lg rounded-lg p-6 mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+      <div className="flex-grow">
+        <h4 className="text-xl font-semibold text-gray-800">{room.name}</h4>
         <p className="text-sm text-gray-600">
           <strong>Check In:</strong> {formatDate(booking.check_in)}
         </p>
@@ -39,10 +39,10 @@ const BookedRoomCard = ({ booking }) => {
           <strong>Check Out:</strong> {formatDate(booking.check_out)}
         </p>
       </div>
-      <div className="flex flex-col sm:flex-row w-full sm:w-auto sm:space-x-2 mt-2 sm:mt-0">
+      <div className="flex flex-col sm:flex-row w-full sm:w-auto sm:space-x-2 mt-4 sm:mt-0">
         <Link
           href={`/rooms/${room.$id}`}
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-2 sm:mb-0 w-full sm:w-auto text-center hover:bg-blue-700"
+          className="flex items-center bg-gradient-to-r from-green-400 to-blue-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 w-full sm:w-auto text-center hover:bg-gradient-to-l transition duration-300"
         >
           View Room
         </Link>

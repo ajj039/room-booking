@@ -7,7 +7,6 @@ import bookRoom from "@/app/actions/bookRoom";
 
 const BookingForm = ({ room }) => {
   const [state, formAction] = useFormState(bookRoom, {});
-
   const router = useRouter();
 
   useEffect(() => {
@@ -19,11 +18,13 @@ const BookingForm = ({ room }) => {
   }, [state]);
 
   return (
-    <div className="mt-6">
-      <h2 className="text-xl font-bold">Book this Room</h2>
-      <form action={formAction} className="mt-4">
+    <div className="max-w-7xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg border border-gray-200">
+      <h2 className="text-2xl font-semibold text-center text-gray-800 text-left">
+        Book this Room
+      </h2>
+      <form action={formAction} className="mt-6">
         <input type="hidden" name="room_id" value={room.$id} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <div>
             <label
               htmlFor="check_in_date"
@@ -35,7 +36,7 @@ const BookingForm = ({ room }) => {
               type="date"
               id="check_in_date"
               name="check_in_date"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
             />
           </div>
@@ -50,7 +51,7 @@ const BookingForm = ({ room }) => {
               type="time"
               id="check_in_time"
               name="check_in_time"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
             />
           </div>
@@ -65,7 +66,7 @@ const BookingForm = ({ room }) => {
               type="date"
               id="check_out_date"
               name="check_out_date"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
             />
           </div>
@@ -80,16 +81,16 @@ const BookingForm = ({ room }) => {
               type="time"
               id="check_out_time"
               name="check_out_time"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               required
             />
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-gradient-to-r from-teal-500 to-blue-500 hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Book Room
           </button>

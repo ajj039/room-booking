@@ -11,7 +11,7 @@ const RegisterPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (state.error) toast.error(error);
+    if (state.error) toast.error(state.error);
     if (state.success) {
       toast.success("User created");
       setTimeout(() => {
@@ -19,18 +19,19 @@ const RegisterPage = () => {
       }, 2000);
     }
   }, [state]);
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm mt-20">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mt-20">
         <form action={formAction}>
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Register
+          <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
+            Create your Account
           </h2>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <label
               htmlFor="name"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Name
             </label>
@@ -38,15 +39,15 @@ const RegisterPage = () => {
               type="text"
               id="name"
               name="name"
-              className="border rounded w-full py-2 px-3"
+              className="border border-gray-300 rounded-md w-full py-2 px-3 focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <label
               htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Email
             </label>
@@ -54,15 +55,15 @@ const RegisterPage = () => {
               type="email"
               id="email"
               name="email"
-              className="border rounded w-full py-2 px-3"
+              className="border border-gray-300 rounded-md w-full py-2 px-3 focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Password
             </label>
@@ -70,15 +71,15 @@ const RegisterPage = () => {
               type="password"
               id="password"
               name="password"
-              className="border rounded w-full py-2 px-3"
+              className="border border-gray-300 rounded-md w-full py-2 px-3 focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-8">
             <label
               htmlFor="confirm-password"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Confirm Password
             </label>
@@ -86,7 +87,7 @@ const RegisterPage = () => {
               type="password"
               id="confirm-password"
               name="confirm-password"
-              className="border rounded w-full py-2 px-3"
+              className="border border-gray-300 rounded-md w-full py-2 px-3 focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -94,14 +95,14 @@ const RegisterPage = () => {
           <div className="flex flex-col gap-5">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200"
             >
               Register
             </button>
 
-            <p>
-              Have an account?
-              <Link href="login.html" className="text-blue-500">
+            <p className="text-center">
+              Have an account?{" "}
+              <Link href="/login" className="text-blue-500 hover:underline">
                 Login
               </Link>
             </p>

@@ -8,8 +8,8 @@ import createRoom from "@/app/actions/createRoom";
 
 const AddRoomPage = () => {
   const [state, formAction] = useFormState(createRoom, {});
-
   const router = useRouter();
+
   useEffect(() => {
     if (state.error) toast.error(state.error);
     if (state.success) {
@@ -21,181 +21,112 @@ const AddRoomPage = () => {
   return (
     <>
       <Heading title="Add a Room" />
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full">
+      <div className=" mx-auto bg-white shadow-lg rounded-lg p-8 mt-8">
         <form action={formAction}>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Room Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Enter a name (Large Conference Room)"
-              required
-            />
-          </div>
+          {[
+            {
+              label: "Room Name",
+              type: "text",
+              name: "name",
+              placeholder: "Enter a name (Large Conference Room)",
+            },
+            {
+              label: "Description",
+              type: "textarea",
+              name: "description",
+              placeholder: "Enter a description for the room",
+            },
+            {
+              label: "Square Feet",
+              type: "number",
+              name: "sqft",
+              placeholder: "Enter room size in ft",
+            },
+            {
+              label: "Capacity",
+              type: "number",
+              name: "capacity",
+              placeholder: "Number of people the room can hold",
+            },
+            {
+              label: "Price Per Hour",
+              type: "number",
+              name: "price_per_hour",
+              placeholder: "Enter price per hour",
+            },
+            {
+              label: "Address",
+              type: "text",
+              name: "address",
+              placeholder: "Enter full address",
+            },
+            {
+              label: "Location",
+              type: "text",
+              name: "location",
+              placeholder: "Location (Building, Floor, Room)",
+            },
+            {
+              label: "Availability",
+              type: "text",
+              name: "availability",
+              placeholder: "Availability (Monday - Friday, 9am - 5pm)",
+            },
+            {
+              label: "Amenities",
+              type: "text",
+              name: "amenities",
+              placeholder: "Amenities CSV (projector, whiteboard, etc.)",
+            },
+          ].map(({ label, type, name, placeholder }) => (
+            <div className="mb-6" key={name}>
+              <label
+                htmlFor={name}
+                className="block text-gray-700 font-semibold mb-2"
+              >
+                {label}
+              </label>
+              {type === "textarea" ? (
+                <textarea
+                  id={name}
+                  name={name}
+                  className="border rounded-md w-full py-3 px-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder={placeholder}
+                  required
+                ></textarea>
+              ) : (
+                <input
+                  type={type}
+                  id={name}
+                  name={name}
+                  className="border rounded-md w-full py-3 px-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder={placeholder}
+                  required
+                />
+              )}
+            </div>
+          ))}
 
-          <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              className="border rounded w-full h-24 py-2 px-3"
-              placeholder="Enter a description for the room"
-              required
-            ></textarea>
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="sqft"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Square Feet
-            </label>
-            <input
-              type="number"
-              id="sqft"
-              name="sqft"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Enter room size in ft"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="capacity"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Capacity
-            </label>
-            <input
-              type="number"
-              id="capacity"
-              name="capacity"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Number of people the room can hold"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="price_per_hour"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Price Per Hour
-            </label>
-            <input
-              type="number"
-              id="price_per_hour"
-              name="price_per_hour"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Enter price per hour"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="address"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Enter full address"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="location"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Location
-            </label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Location (Building, Floor, Room)"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="availability"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Availability
-            </label>
-            <input
-              type="text"
-              id="availability"
-              name="availability"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Availability (Monday - Friday, 9am - 5pm)"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="amenities"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Amenities
-            </label>
-            <input
-              type="text"
-              id="amenities"
-              name="amenities"
-              className="border rounded w-full py-2 px-3"
-              placeholder="Amenities CSV (projector, whiteboard, etc.)"
-              required
-            />
-          </div>
-
-          {/* <!-- Image Upload --> */}
-          <div className="mb-8">
+          {/* Image Upload */}
+          <div className="mb-6">
             <label
               htmlFor="image"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-700 font-semibold mb-2"
             >
               Image
             </label>
-
             <input
               type="file"
               id="image"
               name="image"
-              className="border rounded w-full py-2 px-3"
+              className="border rounded-md w-full py-3 px-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-gradient-to-r from-teal-500 to-blue-500 text-white py-3 rounded-md hover:bg-gradient-to-l transition duration-300"
             >
               Save
             </button>
